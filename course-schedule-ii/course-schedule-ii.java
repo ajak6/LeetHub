@@ -1,6 +1,6 @@
 class Solution {
     public int[] findOrder(int numCourses, int[][] prerequisites) {
-        
+        int res[] = new int[numCourses]; int j=0;
         Map<Integer, List<Integer>> adj = new HashMap<>();
         HashMap<Integer, Integer> incoming = new HashMap<>();
         for(int i=0; i < numCourses; i++){
@@ -19,7 +19,7 @@ class Solution {
         while(!bfs.isEmpty()){
             
             int take = bfs.poll();
-            result.add(take);
+            res[j++]=take;
             
             for(int waiting: adj.get(take)){
                 incoming.merge(waiting, -1, Integer::sum);
@@ -30,11 +30,12 @@ class Solution {
             
             
         }
-        if(result.size() == numCourses){
-            int res [] = new int[result.size()];
-            for(int i=0; i < result.size(); i++){
-                res[i] = result.get(i);    
-            }
+        
+        if(j == numCourses){
+//             int res [] = new int[result.size()];
+//             for(int i=0; i < result.size(); i++){
+//                 res[i] = result.get(i);    
+//             }
                 
             
             return res;
