@@ -1,3 +1,4 @@
+[Discussion Post (created on 18/3/2021 at 19:11)](https://leetcode.com/problems/coin-change/discuss/?currentPage=1&orderBy=most_votes&query=)  
 <h2>322. Coin Change</h2><h3>Medium</h3><hr><div><p>You are given an integer array <code>coins</code> representing&nbsp;coins of different denominations and an integer <code>amount</code>&nbsp;representing a total amount of money.</p>
 
 <p>Return <em>the fewest number of coins that you need to make up that amount</em>. If that amount of money cannot be made up by any combination of the coins, return <code>-1</code>.</p>
