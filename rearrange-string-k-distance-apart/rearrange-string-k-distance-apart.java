@@ -11,8 +11,74 @@ class Solution {
         }
     }
     
-    
     public String rearrangeString(String str, int k){
+        
+        if(k==0) return str;
+        
+        int count [] = new int[26];
+        for(int i =0 ; i < str.length(); i++){
+            
+            count[str.charAt(i)-'a']++;
+        }
+        PriorityQueue<Pair> queue = new PriorityQueue<>((x,y)-> Integer.compare(y.count, x.count));
+        
+        for(int i =0 ; i < count.length; i++){
+            if(count[i]>0) {   
+                queue.offer(new Pair((char)(i+'a'), count[i]));
+            }
+        }
+        
+        int n=k;
+        Queue<Pair> q = new LinkedList<>();
+        StringBuilder builder = new StringBuilder();
+        while(n > 0 && !queue.isEmpty()) {
+            
+            //pick the max fre char add to stringBuilder
+            //push this into a temp queeu
+            //when the queue size is k it means we have added elements in the queue already
+            // a3 b1 c 1
+            // a2 b0 c0
+            // wuerue size is 3 k is also 3 but a only has a gap of 2 before you pick it up again
+            // this means queue size should be k+1 before we starting polling the element from it and add it
+            // heap
+            // if its used and added to queue - we will only access it after other lemenets added are polled from queue
+            Pair p = queue.poll();
+            if(p.count ==0){ // does not make sense but if you only have aaab and k -2 {
+                if(builder.length() < str.length()) return "";
+                else return builder.toString();
+            }
+            builder.append(p.c);
+            if(--p.count>=0){
+                q.offer(p);
+            }
+            if(q.size()>=k){
+                queue.offer(q.poll());
+            }
+        }
+        return builder.length()==str.length()?builder.toString(): "";
+    }
+    
+    
+    public String rearrangeString2(String str, int k){
+            //won't change order but add blanks if we cannot execute
+        
+        Queue<Character> queue = new LinkedList<>();
+        char c[] = str.toCharArray();
+        return "";
+        //"aaadbbcc"
+        // answer - a . . a . . adb . . bcc
+        
+        // you pick the first 
+        // if in last k terms you have not see a 
+        //so we need a LRU cache o size k
+        // linkedhashmap of size k
+        //but how will you increase its size so it discards the oldees element and then you are able to add it again?
+        //
+        //brute firce everytie you select a char you look back k chars if you see the char you add the duff betwen your index - seen index blank spaces.
+        //in a hashmap you store th chars index and then when you see its index you add balnks instead of chars until last index is higher than k. 
+    
+    }
+    public String rearrangeString133(String str, int k){
         
         char c[] = str.toCharArray();
         
