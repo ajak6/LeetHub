@@ -39,22 +39,21 @@ class Solution {
         
         int div = 1000;
         StringBuilder builder =new StringBuilder();
-        while(num>0 && div >0) {
+        while(num>0) {
             
             while(div>=num && div !=1){
                 div=div/10;
             }
             int quotient=0;
-            System.out.println("start newnum "+ num + " remainder "+ quotient + "  div "+ div);
-            quotient = num/div;
+            // System.out.println("start newnum "+ num + " remainder "+ quotient + "  div "+ div);
             int prev=num;
             num  = num % div;
             quotient = prev-num;
             // num = num - remainder;
-            div=div/10;
+            div=div/10; //reduce the divisor to focus on next one,
             
             getRoman(quotient, builder);
-            System.out.println("End newnum "+ num + " remainder "+ quotient + "  div "+ div);
+            // System.out.println("End newnum "+ num + " remainder "+ quotient + "  div "+ div);
             
         } 
      return builder.toString();
