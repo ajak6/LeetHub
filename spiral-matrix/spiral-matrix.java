@@ -1,6 +1,69 @@
 class Solution {
     public List<Integer> spiralOrder(int[][] matrix) {
         
+        // 0,0 - 0,1- 0,2 - readches the end now your row start should increase since you will nefver start from her
+            //4 limits start left col right col
+            //top row and bottom row
+            //start from the first row
+            //for row you limits are from left to righ
+            //top++
+            //from top to bottom now right--
+            //from right to left on bottom row, bottom --
+            // from bottom to top, left++
+            //repeat from left to right top row
+        int top=0;
+        int bottom = matrix.length-1;
+        int left =0;
+        int right = matrix[0].length-1;
+        List<Integer> list = new ArrayList<>();
+        while(left<=right){
+            
+            for(int i=left; i <= right; i++){
+                list.add(matrix[top][i]);
+            }
+            top++;
+            if(top>bottom) break;
+            for(int i=top ; i <= bottom; i++) {
+                list.add(matrix[i][right]);
+            }
+            right--;
+            if(left>right)break;
+            for(int i=right;  i >=left; i--) {
+                list.add(matrix[bottom][i]);
+            }
+            bottom--;
+            if(top>bottom) break;
+            for(int i=bottom; i >=top;i--) {
+                list.add(matrix[i][left]);
+            }
+            left++;
+            
+            //left =1, right=1, top=1 bottom =1
+            
+        }
+        return list;
+            
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    public List<Integer> spiralOrde1r(int[][] matrix) {
+        
         // start from 0,0 either we can come up with a element which can explain
         // i,j - > add 1 to j when j reached max add 1 to i when i is reached add -1 to j
         // when ju is zero -1 with i but don't visited already visitedd
