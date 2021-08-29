@@ -1,4 +1,40 @@
 class Solution {
+    // if we do each task then we cannot do that task again until the cololdown
+    // i this cooldown we can insert other elements if possible.
+    // o  the total length will be dependent on the value which is most frequent.
+    // is the order important/
+    // Do we need the actual schedule or just the count eventually/
+    // can n be 0/ in case of 0 jus return the lenght
+    //  AAABBB n=2
+    // A--A--A -> most (frequent-1) * n
+    // Whatever number of A are present: 
+    // AB-AB-AB -> now the empty les are only 2 because b was of the same count as A so we can place them together.
+    // event if don't
+    // A--A--A (4 becauase gap is 2 and we have 3A's so total blanks will freqA-1*n
+    //now we can place in these gaps we will try to place other letters
+    // so place B since they occur 3 times-> it will be placed ton 2 blanmks to keep the distance 
+    //blanks left are 2
+    // problem is AAABBBCCEFF
+    // A BF A BF ABC--Cif need a gap between c and c 
+    // or we try to arrange it in some order and see how many blanks we used.
+    // ABCFABCFABE - would be the ideal arrangement
+    ///
+    public int leastInterval(char [] tasks, int n){
+        
+        int c[] = new int[26];
+        
+        for(char t: tasks){
+            c[t-'A']++;
+        }
+        int maxFreq = Arrays.stream(c).max().getAsInt();
+        int totalWithMaxFreq = Math.toIntExact(Arrays.stream(c).filter(x-> x==maxFreq).count());
+        // System.out.println(maxFreq);
+        int result = ((n - (totalWithMaxFreq-1)) * (maxFreq-1)) - (tasks.length - (maxFreq*totalWithMaxFreq));
+        // System.out.println(result);
+        return tasks.length + (result<0?0:result);
+        
+    }
+    
     
     
     class Pair{
@@ -13,7 +49,7 @@ class Solution {
         }
     }
     
-    public int leastInterval(char[] tasks, int n) {
+    public int leastInterval1(char[] tasks, int n) {
         
         //count the freq of all tasks
         // have a PQ which pulls the max freq on the top
@@ -129,7 +165,7 @@ class Solution {
         System.out.println(result);
         return 5;
     }
-    public int leastInterval1(char[] tasks, int n) {
+    public int leastInterval5(char[] tasks, int n) {
         
       /* we count number of tasks of each type.
       one way is to keep picking the character which occurs the most and park this character for n more slots.
