@@ -1,5 +1,20 @@
 class Solution {
+    
     public int[] twoSum(int[] nums, int target) {
+        //are there duplicates? can those be used if they are on different index
+        // are there duplicates?
+        // care about overflow since we are taking sums?
+        // since target is int sum which overflows can be risky and integer overflow can return a false result
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for(int i =0 ; i < nums.length; i++){
+            if(map.containsKey(target-nums[i])){
+                return new int[]{i, map.get(target-nums[i])};
+            }
+            map.put(nums[i], i);
+        }
+        return new int[0];
+    }
+    public int[] twoSum2(int[] nums, int target) {
         HashMap<Integer, Integer> twoSum = new HashMap<>();
         for(int i =0 ; i < nums.length ; i++) {
             
@@ -10,7 +25,7 @@ class Solution {
         return new int[0];
     }
     
-    public int[] twoSum2(int[] nums, int target) {
+    public int[] twoSum3(int[] nums, int target) {
         
         HashMap<Integer, Integer> map = new HashMap<>();
         
