@@ -1,5 +1,37 @@
 class Solution {
-    public boolean canFinish(int numCourses, int[][] prerequisites) {
+    public boolean canFinish(int numCourses, int[][] pre) {
+        //create the adj graph
+        //also maintain the incoming edges to each node3
+        //one who
+        Map<Integer,List<Integer>>adj = new HashMap<>();
+        int degree[]=new int[numCourses];
+        for(int i=0;i< pre.length;i++){
+            
+            adj.computeIfAbsent(pre[i][1], x->new ArrayList<>()).add(pre[i][0]);
+            degree[pre[i][0]]++;
+        }
+        Queue<Integer> q= new LinkedList<>();
+        for(int i=0; i <degree.length;i++){
+            if(degree[i]==0)q.add(i);
+        }
+        while(!q.isEmpty()) {
+            
+            int course = q.poll();
+            List<Integer> courseCanDo=adj.get(course);
+            if(courseCanDo==null)continue;
+            for(int tryToTake: courseCanDo) {
+                degree[tryToTake]--;
+                if(degree[tryToTake]==0){
+                    q.offer(tryToTake);
+                }
+            }
+        }
+        System.out.println(Arrays.stream(degree).sum());
+        return q.isEmpty() && Arrays.stream(degree).sum()==0;
+    
+    
+    }
+    public boolean canFinish11(int numCourses, int[][] prerequisites) {
         if(numCourses==1)return true;
         if(prerequisites==null || prerequisites.length==0 || prerequisites[0].length==0) return true;
         Map<Integer, List<Integer>> adj = new HashMap<>();
