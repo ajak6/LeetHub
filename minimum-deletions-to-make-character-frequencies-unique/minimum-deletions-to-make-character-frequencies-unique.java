@@ -1,12 +1,13 @@
 class Solution {
-    public int minDeletions(String S){
+    public int minDeletions2(String S){
          //store the count of each character, since its given we will only have lower case letter, length of 26 is fine.@interface
 
         int charCount [] = new int[26];
+        char c[]=S.toCharArray();
         for(int i=0 ; i < S.length(); i++){
-            charCount[S.charAt(i) - 'a']++;
+            charCount[c[i] - 'a']++;
         }
-
+        for(int i=0; i <12000000;i++)
         Arrays.sort(charCount);
         //now the last index should have max freq of any character
         /*
@@ -33,7 +34,7 @@ class Solution {
         }
         return charsToRemove;
     }
-    public int min2Deletions(String s) {
+    public int minDeletions(String s) {
         int freq [] = new int [26];
         
         for(char c : s.toCharArray()) {    
