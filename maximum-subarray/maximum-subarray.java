@@ -1,17 +1,40 @@
 class Solution {
     public int maxSubArray(int[] nums) {
+         // int sum[] = new int[nums.length+1];
+        long runningSum=0;
+        long minSum = 0;
+        long max=Integer.MIN_VALUE;
+        for(int i=0;i < nums.length;i++) {
+            runningSum += nums[i]; //-2 -1
+            max = Math.max(runningSum - minSum, max);//-2 1
+            minSum=Math.min(minSum, runningSum); //0 or -2
+        }
+        
+        return (int)max;
+        
+    }
+    
+    public int maxSubArray22(int[] nums) {
         // [-2,1,-2,4,-1,2,1,-5,4] => [-2, -1, -3, 1, 0, 2, 3, -2, 2]
         int sum[] = new int[nums.length+1];
         for(int i=0; i < nums.length ; i++){
             sum[i+1] = sum[i]+nums[i];
         }
         // System.out.println(Arrays.toString(sum));
-        int max = Integer.MIN_VALUE;
-        for(int i=0 ; i  < sum.length; i++) {
+        // int max = Integer.MIN_VALUE;
+//         for(int i=0 ; i  < sum.length; i++) {
             
-            for(int j=i+1; j < sum.length ; j++) {
-                max = Math.max(max, sum[j]-sum[i]);
-            }
+//             for(int j=i+1; j < sum.length ; j++) {
+//                 max = Math.max(max, sum[j]-sum[i]);
+//             }
+//         }
+        int min = sum[0];
+        int max = Integer.MIN_VALUE;
+        
+        for(int i=1; i < sum.length; i++) {
+            max = Math.max(max, sum[i]- min);
+            min = Math.min(min, sum[i]);
+                
         }
         return max;
     }
@@ -49,7 +72,7 @@ class Solution {
         //it means we will
         int maxSum=Integer.MIN_VALUE;
         int minSum = sum[0]; // 0
-        for (int i=1; i<sum.length; i++) {            
+        for (int i=1; i < sum.length; i++) {            
 
             maxSum=Math.max(maxSum, sum[i]-minSum);
             minSum  = Math.min(minSum, sum[i]);
