@@ -16,35 +16,58 @@
  * }
  */
 public class NestedIterator implements Iterator<Integer> {
-    
-    List<Integer> flat = new ArrayList<>();
+    Deque<List<NestedInteger>> stack;
+    Deque<Integer> indexStack;
+    List<NestedInteger> nested;
+    NestedInteger current;
+    int curr;
     public NestedIterator(List<NestedInteger> nestedList) {
-        recurse(nestedList, 0, flat);
+        stack = new ArrayDeque<>();
+        indexStack= new ArrayDeque<>();
+        nested = nestedList;
+        current = null;
+        curr=0;
+        // hasNext();
     }
     
-    public void recurse(List<NestedInteger> list , int i, List<Integer> result){
-        
-        for(;i<list.size(); i++){
-            NestedInteger n = list.get(i);
-            if(n.isInteger()){
-                result.add(n.getInteger());
-            }else{
-                recurse(n.getList(), 0, result);
-            }
-        }
-    }
-    int start =0;
+
     @Override
     public Integer next() {
-        return flat.get(start++);
+        hasNext();
+        int res = current.getInteger();
+        curr++;
+        current=null;
+        return res;
     }
 
     @Override
     public boolean hasNext() {
-        return start < flat.size();
-        // iteratoro until you find a specific integer so that we don't return 
-        // True when it is empty
+        //should iterate and end up at a integer
+        //look in stack top
+        //maintain current pointer and current list
+      //rrent liust can be empty
+        //current list ended
+        //current list contains another list
+        //cjurrent list is a integer
+        // if(current==null)return false;
         
+        while ((current==null || !current.isInteger())) {
+            while(curr == nested.size() && !stack.isEmpty()) {
+                curr = indexStack.poll();
+                nested = stack.poll();
+            }
+            if(curr==nested.size() && stack.isEmpty()) {
+                return false;
+            }
+            current =  nested.get(curr);
+            if(current.isInteger()) return true;
+
+            stack.push(nested);
+            indexStack.push(curr + 1);
+            nested = current.getList();
+            curr = 0;
+        }
+        return false;
         
     }
 }
